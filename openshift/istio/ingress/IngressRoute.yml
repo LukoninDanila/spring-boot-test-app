@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ufs-provider
+  labels:
+    app: istio-ingressgateway
+    chart: gateways
+    heritage: Tiller
+    istio: ingressgateway
+    release: istio
+spec:
+  host: ufs-provider-dev-minfin.apps.ocp-public.sbercloud.ru
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: istio-ingressgateway
+    weight: 100
+  wildcardPolicy: None

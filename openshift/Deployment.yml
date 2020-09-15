@@ -1,0 +1,39 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: test-deploy-openshift
+  labels:
+    app: test-deploy-openshift
+    app.kubernetes.io/part-of: istio
+    version: v1
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 2
+  test: false
+  selector:
+    app: test-deploy-openshift
+    version: v1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: test-deploy-openshift
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: 'true'
+        sidecar.istio.io/proxyLimitsCPU: 200m
+        sidecar.istio.io/proxyLimitsMemory: 300Mi
+        sidecar.istio.io/proxyRequestsCPU: 50m
+        sidecar.istio.io/proxyRequestsMemory: 150Mi

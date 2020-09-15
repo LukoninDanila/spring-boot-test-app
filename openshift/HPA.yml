@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: test-deploy-openshift
+spec:
+  scaleTargetRef:
+    kind: DeploymentConfig
+    name: test-deploy-openshift
+    apiVersion: apps.openshift.io/v1
+    subsource: scale
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80

@@ -1,0 +1,19 @@
+# DestinationRule для взяимодейсткия "Под приложения" - "Egress"
+# Включает mTLS
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: dr-{{ openshift.env }}-{{ os_project.fpi_name }}-{{ integration_entry.name }}-ergess
+spec:
+  host: istio-egressgateway-{{ openshift.env }}-{{ os_project.fpi_name }}
+  subsets:
+  - name: {{ integration_entry.name }}
+    trafficPolicy:
+      loadBalancer:
+        simple: ROUND_ROBIN
+      portLevelSettings:
+      - port:
+          number: {{ os_project.istio.egress.ott.port if (integration_entry.ott | default(false)) else os_project.istio.egress.mtls.port }}
+        tls:
+          mode: ISTIO_MUTUAL
+          sni: {{ integration_entry.host }}

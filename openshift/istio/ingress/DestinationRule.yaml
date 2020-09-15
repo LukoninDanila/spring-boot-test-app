@@ -1,0 +1,17 @@
+# mTLS inrgess - app
+# ЗАКОСТЫЛЕНО
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: default
+spec:
+  exportTo:
+    - .
+  host: '*.dev-minfin.ocp-public.sbercloud.ru'
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpCookie:
+          name: UFS-SESSION
+          ttl: 0s
+

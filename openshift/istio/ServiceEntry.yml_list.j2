@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: se-{{ openshift.env }}-{{ os_project.fpi_name }}-{{ integration_entry.name }}
+  labels:
+    app: {{ openshift.env }}-{{ os_project.fpi_name }}
+spec:
+  exportTo:
+    - .
+  hosts:
+    - {{ integration_entry.host }}
+  location: MESH_EXTERNAL
+  ports:
+  - name: port-{{ integration_entry.port }}
+    number: {{ integration_entry.port }}
+    protocol: {{ integration_entry.protocol | default('HTTP') | upper }}
+  resolution: DNS

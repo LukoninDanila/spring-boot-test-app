@@ -1,0 +1,14 @@
+# Для ускорения работы EnvoyFilter для ОТТ
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: {{ openshift.env }}-test-sidacar
+spec:
+  Ingress:
+    - hosts:
+        - ./*
+        - istio-system/*
+  egress:
+    - hosts:
+        - ./*
+        - istio-system/*

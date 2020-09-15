@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.test.openshift</groupId>
-    <artifactId>deploy</artifactId>
+    <artifactId>test-deploy-openshift</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>deploy</name>
     <description>Demo deploy to openshift project for Spring Boot</description>
